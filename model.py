@@ -178,7 +178,7 @@ class TrainModel_CNN:
         return self._batch_size
 
 
-class DDQN:
+class TrainModel_DDQN:
     def __init__(self, num_layers, width, batch_size, learning_rate, input_dim, output_dim):
         self._input_dim = input_dim
         self._output_dim = output_dim
