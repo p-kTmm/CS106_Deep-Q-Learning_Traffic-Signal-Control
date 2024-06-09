@@ -9,7 +9,7 @@ import argparse
 from training_simulation import Simulation
 from generator import TrafficGenerator
 from memory import Memory
-from model import TrainModel_FC, TrainModel_CNN
+from model import TrainModel_FC, TrainModel_CNN, TrainModel_DDQN
 from visualization import Visualization
 from utils import import_train_configuration, set_sumo, set_train_path
 
@@ -18,8 +18,8 @@ if __name__ == "__main__":
 
     # Set up argument parsing
     parser = argparse.ArgumentParser(description="Train traffic light control model")
-    parser.add_argument('--model', type=str, choices=['fc', 'cnn'], required=True,
-                        help="Model type to use: 'fc' or 'cnn'")
+    parser.add_argument('--model', type=str, choices=['fc', 'cnn', 'ddqn'], required=True,
+                        help="Model type to use: 'dqn-fc' or 'dqn-cnn' or 'ddqn")
     args = parser.parse_args()
 
     # Import configuration
@@ -46,6 +46,16 @@ if __name__ == "__main__":
             input_dim=config['num_states'],
             output_dim=config['num_actions']
         )
+    elif args.model == 'ddqn':
+        Model = TrainModel_DDQN(
+            config['num_layers'],
+            config['width_layers'],
+            config['batch_size'],
+            config['learning_rate'],
+            input_dim=config['num_states'],
+            output_dim=config['num_actions']
+        )
+
 
     Memory = Memory(
         config['memory_size_max'], 
