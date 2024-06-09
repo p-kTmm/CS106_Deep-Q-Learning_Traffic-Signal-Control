@@ -63,7 +63,7 @@ class TrainModel_FC:
         Save the current model in the folder as h5 file and a model architecture summary as png
         """
         self._model.save(os.path.join(path, 'trained_model.h5'))
-        plot_model(self._model, to_file=os.path.join(path, 'model_structure.png'), show_shapes=True,
+        plot_model(self._model, to_file=os.path.join(path, 'model_structure_dqnfc.png'), show_shapes=True,
                    show_layer_names=True)
 
     @property
@@ -162,7 +162,7 @@ class TrainModel_CNN:
         Save the current model in the folder as h5 file and a model architecture summary as png
         """
         self._model.save(os.path.join(path, 'trained_model.h5'))
-        plot_model(self._model, to_file=os.path.join(path, 'model_structure.png'), show_shapes=True,
+        plot_model(self._model, to_file=os.path.join(path, 'model_structure_dqncnn.png'), show_shapes=True,
                    show_layer_names=True)
 
     @property
@@ -203,7 +203,7 @@ class TrainModel_DDQN:
         outputs = layers.Dense(self._output_dim, activation='linear')(x)
 
         model = keras.Model(inputs=inputs, outputs=outputs, name='my_model')
-        model.compile(loss=losses.mean_squared_error, optimizer=Adam(lr=self._learning_rate))
+        model.compile(loss=MeanSquaredError(), optimizer=Adam(learning_rate=self._learning_rate))
         return model
     
 
@@ -238,8 +238,8 @@ class TrainModel_DDQN:
         self._target_model.save(os.path.join(path, 'target_model.h5'))
     
         # Optionally save the model architectures to PNG
-        plot_model(self._model, to_file=os.path.join(path, 'model_structure.png'), show_shapes=True, show_layer_names=True)
-        plot_model(self._target_model, to_file=os.path.join(path, 'model_structure_target.png'), show_shapes=True, show_layer_names=True)
+        plot_model(self._model, to_file=os.path.join(path, 'model_structure_ddqn.png'), show_shapes=True, show_layer_names=True)
+        plot_model(self._target_model, to_file=os.path.join(path, 'model_structure_target_ddqn.png'), show_shapes=True, show_layer_names=True)
 
     def update_target_model(self):
         """
