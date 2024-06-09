@@ -119,7 +119,6 @@ class Simulation:
         """
         Pick the best action known based on the current state of the env
         """
-        state = np.reshape(state, (1, 8, 10, 1))  # Ensure the state is reshaped correctly
         return np.argmax(self._Model.predict_one(state))
 
 
@@ -237,6 +236,3 @@ class Simulation:
     @property
     def reward_episode(self):
         return self._reward_episode
-
-
-
