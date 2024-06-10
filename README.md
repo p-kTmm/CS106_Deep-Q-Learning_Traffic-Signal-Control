@@ -34,6 +34,8 @@ I've used the following software versions: Python 3.7, SUMO traffic simulator 1.
 python training_main.py --model fc  #(option model: fc, cnn, ddqn)
 ```
 
+You can use ```train_colab_main.ipynb```to train model on google colab
+
 Now the agent should start the training.
 
 You don't need to open any SUMO software since everything is loaded and done in the background. If you want to see the training process as it goes, you need to set to *True* the parameter *gui* contained in the file **training_settings.ini**. Keep in mind that viewing the simulation is very slow compared to the background training, and you also need to close SUMO-GUI every time an episode ends, which is not practical.
