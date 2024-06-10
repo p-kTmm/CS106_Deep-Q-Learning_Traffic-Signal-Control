@@ -4,7 +4,12 @@ A framework where a deep Q-Learning Reinforcement Learning agent tries to choose
 
 I have uploaded this here to help anyone searching for a good starting point for deep reinforcement learning with SUMO. This code is extracted from my master thesis, and it represents a simplified version of the code used for my thesis work. I hope you can find this repository useful for your project.
 
-## Team Develops (CS106)
+## Team Development (CS106)
+
+Our team has developed an additional DQN model using CNN and a DDQN model, which you can choose for training. Both models perform better compared to the DQN_FullyConnected model from the original paper. 
+
+Additionally, our team has created a folder ```multiple_intersection``` containing the source code for model development with multiple intersections . We also designed two models: DQN and DDQN.
+
 
 ## Getting Started
 
