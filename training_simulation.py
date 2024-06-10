@@ -292,7 +292,9 @@ class Simulation:
     
             if isinstance(self._Model, TrainModel_DDQN):
                 # DDQN-specific replay logic
-    
+                actions = np.array([val[1] for val in batch])  # extract actions from the batch
+                rewards = np.array([val[2] for val in batch])  # extract rewards from the batch
+
                 # prediction
                 q_s_a = self._Model.predict_batch(states, use_target=False)  # predict Q(state) using the main model
                 q_s_a_next = self._Model.predict_batch(next_states, use_target=False)  # predict Q(next_state) using the main model
