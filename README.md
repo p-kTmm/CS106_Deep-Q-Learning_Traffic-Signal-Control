@@ -9,7 +9,7 @@ I have uploaded this here to help anyone searching for a good starting point for
 
 Our team has developed an additional DQN model using CNN and a DDQN model, which you can choose for training. Both models perform better compared to the DQN_FullyConnected model from the original paper. 
 
-Additionally, our team has created a folder ```multiple_intersection``` containing the source code for model development with multiple intersections . We also designed two models: DQN and DDQN.
+Additionally, our team has created a folder ```multiple_intersection``` containing the source code for model development with multiple intersections . We also designed two models: DQN and DDQ (read README.md in ```multiple_intersection``` folder for more info.
 
 
 ## Getting Started
