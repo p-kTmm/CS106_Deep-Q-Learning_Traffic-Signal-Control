@@ -1,4 +1,4 @@
-# Deep Q-Learning Agent for Traffic Signal Control
+# Deep Q-Learning Agent for Traffic Signal Control (Author)
 
 A framework where a deep Q-Learning Reinforcement Learning agent tries to choose the correct traffic light phase at an intersection to maximize traffic efficiency.
 
