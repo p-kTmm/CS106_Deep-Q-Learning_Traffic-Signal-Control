@@ -3,6 +3,7 @@ import numpy as np
 import random
 import timeit
 import os
+from model import TrainModel_FC, TrainModel_CNN, TrainModel_DDQN
 
 # phase codes based on environment.net.xml
 PHASE_NS_GREEN = 0  # action 0 code 00
