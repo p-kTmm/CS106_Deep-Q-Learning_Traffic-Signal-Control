@@ -1,4 +1,4 @@
-# Deep Q-Learning Agent for Traffic Signal Control (Author)
+# Deep Q-Learning Agent for Traffic Signal Control (Author: Andrea Vidali)
 
 A framework where a deep Q-Learning Reinforcement Learning agent tries to choose the correct traffic light phase at an intersection to maximize traffic efficiency.
 
@@ -117,6 +117,3 @@ The settings used during the testing and contained in the file **testing_setting
 - **Reward**: change in *cumulative waiting time* between actions, where the waiting time of a car is the number of seconds spent with speed=0 since the spawn; *cumulative* means that every waiting time of every car located in an incoming lane is summed. When a car leaves an oncoming lane (i.e. crossed the intersection), its waiting time is no longer counted. Therefore this translates to a positive reward for the agent.
 - **Learning mechanism**: the agent make use of the Q-learning equation *Q(s,a) = reward + gamma • max Q'(s',a')* to update the action values and a deep neural network to learn the state-action function. The models that can be used to estimate Q-Learining include DQN_FullyConnected, DQN_CNN, DDQN. Also, an experience replay mechanism is implemented: the experience of the agent is stored in a memory and, at the end of each episode, multiple batches of randomized samples are extracted from the memory and used to train the neural network, once the action values have been updated with the Q-learning equation.
 
-## Author
-
-* **Andrea Vidali** - *University of Milano-Bicocca*
