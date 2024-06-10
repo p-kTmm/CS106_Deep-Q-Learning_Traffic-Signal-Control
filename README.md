@@ -24,7 +24,7 @@ I've used the following software versions: Python 3.7, SUMO traffic simulator 1.
 1. Clone or download the repo.
 2. Using the Anaconda prompt or any other terminal, navigate to the root folder and run the file **training_main.py** by executing:
 ```
-python training_main.py
+python training_main.py --model fc  #(option model: fc, cnn, ddqn)
 ```
 
 Now the agent should start the training.
@@ -44,7 +44,7 @@ Now you can finally test the trained agent. To do so, you have to run the file *
 The main file is **training_main.py**. It handles the main loop that starts an episode on every iteration. It also saves the network weights and three plots: negative reward, cumulative wait time, and average queues. 
 
 Overall the algorithm is divided into classes that handle different parts of the training.
-- The **Model** class defines everything about the deep neural network, and it also contains some functions used to train the network and predict the outputs. In the **model.py** file, two different **model** classes are defined: one used only during the training and only during the testing.
+- The **Model** class defines everything about the deep neural network, and it also contains some functions used to train the network and predict the outputs. In the **model.py** file, multiple different **model** classes are defined: used only during the training and only during the testing.
 - The **Memory** class handle the memorization for the experience replay mechanism. A function adds a sample into the memory, while another function retrieves a batch of samples from the memory.
 - The **Simulation** class handles the simulation. In particular, the function *run* allows the simulation of one episode. Also, other functions are used during *run* to interact with SUMO, for example: retrieving the state of the environment (*get_state*), set the next green light phase (*_set_green_phase*) or preprocess the data to train the neural network (*_replay*). Two files contain a slightly different **Simulation** class: **training_simulation.py** and **testing_simulation.py**. Which one is loaded depends if we are doing the training phase or the testing phase.
 - The **TrafficGenerator** class contains the function dedicated to defining every vehicle's route in one episode. The file created is *episode_routes.rou.xml*, which is placed in the "intersection" folder.
