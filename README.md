@@ -1,5 +1,5 @@
 # Deep Q-Learning Agent for Traffic Signal Control 
-## (Author: Andrea Vidali)
+## Author: Andrea Vidali
 
 A framework where a deep Q-Learning Reinforcement Learning agent tries to choose the correct traffic light phase at an intersection to maximize traffic efficiency.
 
