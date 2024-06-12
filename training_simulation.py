@@ -254,85 +254,85 @@ class Simulation:
         return state
 
 
-    # def _replay(self):
-    #     """
-    #     Retrieve a group of samples from the memory and for each of them update the learning equation, then train
-    #     """
-    #     batch = self._Memory.get_samples(self._Model.batch_size)
-
-    #     if len(batch) > 0:  # if the memory is full enough
-    #         states = np.array([val[0] for val in batch])  # extract states from the batch
-    #         next_states = np.array([val[3] for val in batch])  # extract next states from the batch
-
-    #         # prediction
-    #         q_s_a = self._Model.predict_batch(states)  # predict Q(state), for every sample
-    #         q_s_a_d = self._Model.predict_batch(next_states)  # predict Q(next_state), for every sample
-
-    #         # setup training arrays
-    #         x = np.zeros((len(batch), self._num_states))
-    #         y = np.zeros((len(batch), self._num_actions))
-
-    #         for i, b in enumerate(batch):
-    #             state, action, reward, _ = b[0], b[1], b[2], b[3]  # extract data from one sample
-    #             current_q = q_s_a[i]  # get the Q(state) predicted before
-    #             current_q[action] = reward + self._gamma * np.amax(q_s_a_d[i])  # update Q(state, action)
-    #             x[i] = state
-    #             y[i] = current_q  # Q(state) that includes the updated action value
-
-    #         self._Model.train_batch(x, y)  # train the NN
     def _replay(self):
         """
         Retrieve a group of samples from the memory and for each of them update the learning equation, then train
         """
         batch = self._Memory.get_samples(self._Model.batch_size)
-    
+
         if len(batch) > 0:  # if the memory is full enough
             states = np.array([val[0] for val in batch])  # extract states from the batch
             next_states = np.array([val[3] for val in batch])  # extract next states from the batch
-    
-            if isinstance(self._Model, TrainModel_DDQN):
-                # DDQN-specific replay logic
-                actions = np.array([val[1] for val in batch])  # extract actions from the batch
-                rewards = np.array([val[2] for val in batch])  # extract rewards from the batch
 
-                # prediction
-                q_s_a = self._Model.predict_batch(states, use_target=False)  # predict Q(state) using the main model
-                q_s_a_next = self._Model.predict_batch(next_states, use_target=False)  # predict Q(next_state) using the main model
-                q_s_a_d = self._Model.predict_batch(next_states, use_target=True)  # predict Q(next_state) using the target model
-    
-                # setup training arrays
-                x = np.zeros((len(batch), self._Model.input_dim))
-                y = np.zeros((len(batch), self._Model.output_dim))
-    
-                for i in range(len(batch)):
-                    state, action, reward, next_state = states[i], actions[i], rewards[i], next_states[i]
-                    current_q = q_s_a[i]  # get the Q(state) predicted before
-    
-                    # Double DQN update Q(state, action)
-                    best_next_action = np.argmax(q_s_a_next[i])  # main model determines the best next action
-                    target_q_value = q_s_a_d[i][best_next_action]  # target model provides the Q-value for the best next action
-                    current_q[action] = reward + self._gamma * target_q_value
-    
-                    x[i] = state
-                    y[i] = current_q  # Q(state) that includes the updated action value
-    
-            else:
-                # Standard DQN replay logic (for FC and CNN)
-                q_s_a = self._Model.predict_batch(states)  # predict Q(state) using the main model
-                q_s_a_d = self._Model.predict_batch(next_states)  # predict Q(next_state) using the main model
-    
-                # setup training arrays
-                x = np.zeros((len(batch), self._Model.input_dim))
-                y = np.zeros((len(batch), self._Model.output_dim))
-    
-                for i, b in enumerate(batch):
-                    state, action, reward, _ = b[0], b[1], b[2], b[3]  # extract data from one sample
-                    current_q = q_s_a[i]  # get the Q(state) predicted before
-                    current_q[action] = reward + self._gamma * np.amax(q_s_a_d[i])  # update Q(state, action)
-                    x[i] = state
-                    y[i] = current_q  # Q(state) that includes the updated action value
-    
+            # prediction
+            q_s_a = self._Model.predict_batch(states)  # predict Q(state), for every sample
+            q_s_a_d = self._Model.predict_batch(next_states)  # predict Q(next_state), for every sample
+
+            # setup training arrays
+            x = np.zeros((len(batch), self._num_states))
+            y = np.zeros((len(batch), self._num_actions))
+
+            for i, b in enumerate(batch):
+                state, action, reward, _ = b[0], b[1], b[2], b[3]  # extract data from one sample
+                current_q = q_s_a[i]  # get the Q(state) predicted before
+                current_q[action] = reward + self._gamma * np.amax(q_s_a_d[i])  # update Q(state, action)
+                x[i] = state
+                y[i] = current_q  # Q(state) that includes the updated action value
+
             self._Model.train_batch(x, y)  # train the NN
+    # def _replay(self):
+    #     """
+    #     Retrieve a group of samples from the memory and for each of them update the learning equation, then train
+    #     """
+    #     batch = self._Memory.get_samples(self._Model.batch_size)
+    
+    #     if len(batch) > 0:  # if the memory is full enough
+    #         states = np.array([val[0] for val in batch])  # extract states from the batch
+    #         next_states = np.array([val[3] for val in batch])  # extract next states from the batch
+    
+    #         if isinstance(self._Model, TrainModel_DDQN):
+    #             # DDQN-specific replay logic
+    #             actions = np.array([val[1] for val in batch])  # extract actions from the batch
+    #             rewards = np.array([val[2] for val in batch])  # extract rewards from the batch
+
+    #             # prediction
+    #             q_s_a = self._Model.predict_batch(states, use_target=False)  # predict Q(state) using the main model
+    #             q_s_a_next = self._Model.predict_batch(next_states, use_target=False)  # predict Q(next_state) using the main model
+    #             q_s_a_d = self._Model.predict_batch(next_states, use_target=True)  # predict Q(next_state) using the target model
+    
+    #             # setup training arrays
+    #             x = np.zeros((len(batch), self._Model.input_dim))
+    #             y = np.zeros((len(batch), self._Model.output_dim))
+    
+    #             for i in range(len(batch)):
+    #                 state, action, reward, next_state = states[i], actions[i], rewards[i], next_states[i]
+    #                 current_q = q_s_a[i]  # get the Q(state) predicted before
+    
+    #                 # Double DQN update Q(state, action)
+    #                 best_next_action = np.argmax(q_s_a_next[i])  # main model determines the best next action
+    #                 target_q_value = q_s_a_d[i][best_next_action]  # target model provides the Q-value for the best next action
+    #                 current_q[action] = reward + self._gamma * target_q_value
+    
+    #                 x[i] = state
+    #                 y[i] = current_q  # Q(state) that includes the updated action value
+    
+    #         else:
+    #             # Standard DQN replay logic (for FC and CNN)
+    #             q_s_a = self._Model.predict_batch(states)  # predict Q(state) using the main model
+    #             q_s_a_d = self._Model.predict_batch(next_states)  # predict Q(next_state) using the main model
+    
+    #             # setup training arrays
+    #             x = np.zeros((len(batch), self._Model.input_dim))
+    #             y = np.zeros((len(batch), self._Model.output_dim))
+    
+    #             for i, b in enumerate(batch):
+    #                 state, action, reward, _ = b[0], b[1], b[2], b[3]  # extract data from one sample
+    #                 current_q = q_s_a[i]  # get the Q(state) predicted before
+    #                 current_q[action] = reward + self._gamma * np.amax(q_s_a_d[i])  # update Q(state, action)
+    #                 x[i] = state
+    #                 y[i] = current_q  # Q(state) that includes the updated action value
+    
+    #         self._Model.train_batch(x, y)  # train the NN
 
     def _save_episode_stats(self):
         """
