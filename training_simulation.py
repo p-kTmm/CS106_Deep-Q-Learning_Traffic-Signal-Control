@@ -66,9 +66,19 @@ class Simulation:
             reward = old_total_wait - current_total_wait
 
             # saving the data into the memory
+            # if self._step != 0:
+            #     self._Memory.add_sample((old_state, old_action, reward, current_state))
             if self._step != 0:
-                self._Memory.add_sample((old_state, old_action, reward, current_state))
+              # Estimate the Q-value for the old state-action pair
+              old_q_value = self._Model.predict_one(old_state)[0][old_action]
+              # Calculate the target Q-value
+              max_future_q = np.max(self._Model.predict_one(current_state))
+              td_error = reward + self._gamma * max_future_q - old_q_value
+              # Add sample to the memory with the calculated TD error as priority
+              self._Memory.add_sample((old_state, old_action, reward, current_state), td_error)
 
+
+            
             # choose the light phase to activate, based on the current state of the intersection
             action = self._choose_action(current_state, epsilon)
 
