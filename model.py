@@ -236,8 +236,8 @@ class TrainModel_DDQN:
         Train the nn using the updated q-values and importance sampling weights
         """
         sample_weights = is_weights  # Set the importance sampling weights
-        self._model.fit(states, q_sa, sample_weight=sample_weights, epochs=1, verbose=0)
-        # self._model.fit(states, q_sa, epochs=1, verbose=0)
+        # self._model.fit(states, q_sa, sample_weight=sample_weights, epochs=1, verbose=0)
+        self._model.fit(states, q_sa, epochs=1, verbose=0)
         self.train_counter += 1
         if self.train_counter % self.update_freq == 0:
             self.update_target_model()
