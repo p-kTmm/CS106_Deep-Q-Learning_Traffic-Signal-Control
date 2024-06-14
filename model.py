@@ -51,11 +51,13 @@ class TrainModel_FC:
         """
         return self._model.predict(states)
 
-    def train_batch(self, states, q_sa):
+    def train_batch(self, states, q_sa, is_weights):
         """
-        Train the nn using the updated q-values
+        Train the nn using the updated q-values and importance sampling weights
         """
-        self._model.fit(states, q_sa, epochs=1, verbose=0)
+        sample_weights = is_weights  # Set the importance sampling weights
+        self._model.fit(states, q_sa, sample_weight=sample_weights, epochs=1, verbose=0)
+        # self._model.fit(states, q_sa, epochs=1, verbose=0)
 
     def save_model(self, path):
         """
@@ -145,16 +147,22 @@ class TrainModel_CNN:
         states = np.reshape(states, [-1, input_height, input_width, input_channels])  # Adjust shape for CNN
         return self._model.predict(states)
 
-    def train_batch(self, states, q_sa):
+    def train_batch(self, states, q_sa, is_weights):
         """
-        Train the nn using the updated q-values
+        Train the cnn using the updated q-values
         """
         input_height = 20 # Example height
         input_width = 4 # Example width
         input_channels = 1  # Example channels (grayscale)
 
         states = np.reshape(states, [-1, input_height, input_width, input_channels])  # Adjust shape for CNN
-        self._model.fit(states, q_sa, epochs=1, verbose=0)
+        # Set the importance sampling weights
+        sample_weights = is_weights
+        
+        # Train the model with the provided data and sample weights
+        self._model.fit(states, q_sa, sample_weight=sample_weights, epochs=1, verbose=0)
+        
+        # self._model.fit(states, q_sa, epochs=1, verbose=0)
 
     def save_model(self, path):
         """
@@ -223,11 +231,13 @@ class TrainModel_DDQN:
             return self._target_model.predict(states)
         return self._model.predict(states)
 
-    def train_batch(self, states, q_sa):
+    def train_batch(self, states, q_sa, is_weights):
         """
-        Train the nn using the updated q-values
+        Train the nn using the updated q-values and importance sampling weights
         """
-        self._model.fit(states, q_sa, epochs=1, verbose=0)
+        sample_weights = is_weights  # Set the importance sampling weights
+        self._model.fit(states, q_sa, sample_weight=sample_weights, epochs=1, verbose=0)
+        # self._model.fit(states, q_sa, epochs=1, verbose=0)
         self.train_counter += 1
         if self.train_counter % self.update_freq == 0:
             self.update_target_model()
