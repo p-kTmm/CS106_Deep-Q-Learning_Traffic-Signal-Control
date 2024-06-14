@@ -1,4 +1,3 @@
-
 import os
 from tensorflow.keras.layers import Conv2D
 
@@ -11,7 +10,7 @@ from tensorflow import keras
 from tensorflow.keras import models, layers
 from tensorflow.keras import losses
 from tensorflow.keras.optimizers import Adam
-# from tensorflow.keras.losses import MeanSquaredError
+from tensorflow.keras.losses import MeanSquaredError
 from tensorflow.keras.utils import plot_model
 from tensorflow.keras.models import load_model
 
@@ -36,7 +35,7 @@ class TrainModel_FC:
         outputs = layers.Dense(self._output_dim, activation='linear')(x)
 
         model = keras.Model(inputs=inputs, outputs=outputs, name='my_fc_model')
-        model.compile(loss=losses.mean_squared_error, optimizer=Adam(lr=self._learning_rate))
+        model.compile(loss=MeanSquaredError(), optimizer=Adam(learning_rate=self._learning_rate))
         return model
 
     def predict_one(self, state):
@@ -120,7 +119,7 @@ class TrainModel_CNN:
         outputs = layers.Dense(self._output_dim, activation='linear')(x)
 
         model = keras.Model(inputs=inputs, outputs=outputs, name='my_cnn_model')
-        model.compile(loss=losses.mean_squared_error, optimizer=Adam(lr=self._learning_rate))
+        model.compile(loss=MeanSquaredError(), optimizer=Adam(learning_rate=self._learning_rate))
 
         return model
 
@@ -202,8 +201,8 @@ class TrainModel_DDQN:
             x = layers.Dense(width, activation='relu')(x)
         outputs = layers.Dense(self._output_dim, activation='linear')(x)
 
-        model = keras.Model(inputs=inputs, outputs=outputs, name='my_model')
-        model.compile(loss=losses.mean_squared_error, optimizer=Adam(lr=self._learning_rate))
+        model = keras.Model(inputs=inputs, outputs=outputs, name='my_model_ddqn')
+        model.compile(loss=MeanSquaredError(), optimizer=Adam(learning_rate=self._learning_rate))
         return model
     
 
