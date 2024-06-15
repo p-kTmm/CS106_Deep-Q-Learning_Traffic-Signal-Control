@@ -2,6 +2,7 @@ import traci
 import numpy as np
 import random
 import timeit
+import sys
 import os
 from model import TrainModel_FC, TrainModel_CNN, TrainModel_DDQN
 
@@ -43,7 +44,20 @@ class Simulation:
 
         # first, generate the route file for this simulation and set up sumo
         self._TrafficGen.generate_routefile(seed=episode)
+
+        # Suppress verbose output by redirecting stdout and stderr ------------------------
+        original_stdout = sys.stdout
+        original_stderr = sys.stderr
+        sys.stdout = open(os.devnull, 'w')
+        sys.stderr = open(os.devnull, 'w')
+
         traci.start(self._sumo_cmd)
+
+        # Restore stdout and stderr ------------------------
+        sys.stdout = original_stdout
+        sys.stderr = original_stderr
+
+        
         print("Simulating...")
 
         # inits
