@@ -160,9 +160,9 @@ class TrainModel_CNN:
         sample_weights = is_weights
         
         # Train the model with the provided data and sample weights
-        self._model.fit(states, q_sa, sample_weight=sample_weights, epochs=1, verbose=0)
+        self._model.fit(states, q_sa, sample_weight=sample_weights, epochs=1, verbose=-1)
         
-        # self._model.fit(states, q_sa, epochs=1, verbose=-1)
+        # self._model.fit(states, q_sa, epochs=1, verbose=0)
 
     def save_model(self, path):
         """
