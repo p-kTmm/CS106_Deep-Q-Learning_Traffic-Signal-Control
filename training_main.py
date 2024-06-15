@@ -14,20 +14,18 @@ from visualization import Visualization
 from utils import import_train_configuration, set_sumo, set_train_path
 import tensorflow as tf
 
-# Kiểm tra và cấu hình GPU
-gpus = tf.config.experimental.list_physical_devices('GPU')
-if gpus:
-    try:
-        tf.config.experimental.set_memory_growth(gpus[0], True)
-        tf.config.experimental.set_visible_devices(gpus[0], 'GPU')
-        logical_gpus = tf.config.experimental.list_logical_devices('GPU')
-        print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
-    except RuntimeError as e:
-        print(e)
-
-
 if __name__ == "__main__":
-
+    # Kiểm tra và cấu hình GPU
+    gpus = tf.config.experimental.list_physical_devices('GPU')
+    if gpus:
+        try:
+            tf.config.experimental.set_memory_growth(gpus[0], True)
+            tf.config.experimental.set_visible_devices(gpus[0], 'GPU')
+            logical_gpus = tf.config.experimental.list_logical_devices('GPU')
+            print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+        except RuntimeError as e:
+            print(e)
+    
     # Set up argument parsing
     parser = argparse.ArgumentParser(description="Train traffic light control model")
     parser.add_argument('--model', type=str, choices=['fc', 'cnn', 'ddqn'], required=True,
