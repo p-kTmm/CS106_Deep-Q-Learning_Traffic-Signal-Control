@@ -192,7 +192,7 @@ class TrainModel_DDQN:
         self._batch_size = batch_size
         self._learning_rate = learning_rate
         self.train_counter = 0
-        self.update_freq = 200
+        self.update_freq = 400
         # Main model
         self._model = self._build_model(num_layers, width)
         # Target model
