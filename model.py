@@ -92,46 +92,31 @@ class TrainModel_CNN:
         """
         Build and compile a convolutional neural network
         """
-        input_height = 20  # Height of each lane
-        input_width = 4  # Number of lanes
-        input_channels = 1  # Grayscale
+        input_height = 20 # Example height
+        input_width = 4 # Example width
+        input_channels = 1  # Example channels (grayscale)
 
         inputs = keras.Input(shape=(input_height, input_width, input_channels))
 
         # First Convolutional Layer
-        x = layers.Conv2D(32, (3, 3), activation='relu', padding='same')(inputs)
-        x = layers.BatchNormalization()(x)
-        x = layers.MaxPooling2D((2, 1), padding='same')(x)
+        x = layers.Conv2D(32, (3, 3), activation='relu', padding='same', strides=(1,1))(inputs)
+        x = layers.MaxPooling2D((2, 1))(x)
 
         # Second Convolutional Layer
-        x = layers.Conv2D(64, (3, 3), activation='relu', padding='same')(x)
-        x = layers.BatchNormalization()(x)
-        x = layers.MaxPooling2D((2, 1), padding='same')(x)
+        x = layers.Conv2D(64, (3, 3), activation='relu', padding='same', strides=(1,1))(x)
+        x = layers.MaxPooling2D((2, 1))(x)
 
         # Third Convolutional Layer
-        x = layers.Conv2D(128, (3, 3), activation='relu', padding='same')(x)
-        x = layers.BatchNormalization()(x)
-        x = layers.MaxPooling2D((2, 1), padding='same')(x)
-
-        # Fourth Convolutional Layer
-        x = layers.Conv2D(256, (3, 3), activation='relu', padding='same')(x)
-        x = layers.BatchNormalization()(x)
-        x = layers.MaxPooling2D((2, 1), padding='same')(x)
+        x = layers.Conv2D(128, (3, 3), activation='relu', padding='same', strides=(1,1))(x)
+        x = layers.MaxPooling2D((2, 1))(x)
 
         # Flatten before passing to Dense layers
         x = layers.Flatten()(x)
 
-        # Fully connected layer 1
-        x = layers.Dense(512, activation='relu')(x)
-        x = layers.BatchNormalization()(x)
-
-        # Fully connected layer 2
+        # Fully connected layer
+        x = layers.Dense(256, activation='relu')(x)
         x = layers.Dense(128, activation='relu')(x)
-        x = layers.BatchNormalization()(x)
-
-        # Fully connected layer 3
-        x = layers.Dense(32, activation='relu')(x)
-        x = layers.BatchNormalization()(x)
+        x = layers.Dense(32, activation='linear')(x)
 
         # Output layer
         outputs = layers.Dense(self._output_dim, activation='linear')(x)
