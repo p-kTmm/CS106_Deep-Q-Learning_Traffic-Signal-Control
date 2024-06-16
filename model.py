@@ -99,15 +99,18 @@ class TrainModel_CNN:
 
         # First Convolutional Layer
         x = layers.Conv2D(32, (3, 3), activation='relu', padding='same', strides=(1,1))(inputs)
-        x = layers.MaxPooling2D((2, 1))(x)
+        # x = layers.MaxPooling2D((2, 1))(x)
+        x = layers.MaxPooling2D((2, 2))(x)
 
         # Second Convolutional Layer
         x = layers.Conv2D(64, (3, 3), activation='relu', padding='same', strides=(1,1))(x)
-        x = layers.MaxPooling2D((2, 1))(x)
+        # x = layers.MaxPooling2D((2, 1))(x)
+        x = layers.MaxPooling2D((2, 2))(x)
 
         # Third Convolutional Layer
         x = layers.Conv2D(128, (3, 3), activation='relu', padding='same', strides=(1,1))(x)
-        x = layers.MaxPooling2D((2, 1))(x)
+        # x = layers.MaxPooling2D((2, 1))(x)
+        x = layers.MaxPooling2D((2, 2))(x)
 
         # Flatten before passing to Dense layers
         x = layers.Flatten()(x)
