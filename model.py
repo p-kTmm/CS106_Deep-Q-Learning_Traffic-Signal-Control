@@ -87,6 +87,43 @@ class TrainModel_CNN:
         self._learning_rate = learning_rate
         self._model = self._build_model(num_layers, width)
 
+    # def _build_model(self, num_layers, width):
+    #     """
+    #     Build and compile a convolutional neural network
+    #     """
+    #     input_height = 20 # Example height
+    #     input_width = 4 # Example width
+    #     input_channels = 1  # Example channels (grayscale)
+
+    #     inputs = keras.Input(shape=(input_height, input_width, input_channels))
+
+    #     # First Convolutional Layer
+    #     x = layers.Conv2D(32, (3, 3), activation='relu', padding='same', strides=(1,1))(inputs)
+    #     x = layers.MaxPooling2D((2, 1))(x)
+
+    #     # Second Convolutional Layer
+    #     x = layers.Conv2D(64, (3, 3), activation='relu', padding='same', strides=(1,1))(x)
+    #     x = layers.MaxPooling2D((2, 1))(x)
+
+    #     # Third Convolutional Layer
+    #     x = layers.Conv2D(128, (3, 3), activation='relu', padding='same', strides=(1,1))(x)
+    #     x = layers.MaxPooling2D((2, 1))(x)
+
+    #     # Flatten before passing to Dense layers
+    #     x = layers.Flatten()(x)
+
+    #     # Fully connected layer
+    #     x = layers.Dense(256, activation='relu')(x)
+    #     x = layers.Dense(128, activation='relu')(x)
+    #     x = layers.Dense(32, activation='linear')(x)
+
+    #     # Output layer
+    #     outputs = layers.Dense(self._output_dim, activation='linear')(x)
+
+    #     model = keras.Model(inputs=inputs, outputs=outputs, name='my_cnn_model')
+    #     model.compile(loss=MeanSquaredError(), optimizer=Adam(learning_rate=self._learning_rate))
+
+    #     return model
     def _build_model(self, num_layers, width):
         """
         Build and compile a convolutional neural network
@@ -99,26 +136,27 @@ class TrainModel_CNN:
 
         # First Convolutional Layer
         x = layers.Conv2D(32, (3, 3), activation='relu', padding='same', strides=(1,1))(inputs)
-        # x = layers.MaxPooling2D((2, 1))(x)
-        x = layers.MaxPooling2D((2, 2))(x)
+        x = layers.MaxPooling2D((2, 1))(x)
 
         # Second Convolutional Layer
         x = layers.Conv2D(64, (3, 3), activation='relu', padding='same', strides=(1,1))(x)
-        # x = layers.MaxPooling2D((2, 1))(x)
-        x = layers.MaxPooling2D((2, 2))(x)
+        x = layers.MaxPooling2D((2, 1))(x)
 
         # Third Convolutional Layer
         x = layers.Conv2D(128, (3, 3), activation='relu', padding='same', strides=(1,1))(x)
-        # x = layers.MaxPooling2D((2, 1))(x)
-        x = layers.MaxPooling2D((2, 2))(x)
+        x = layers.MaxPooling2D((2, 1))(x)
 
+        # Four Convolutional Layer
+        x = layers.Conv2D(256, (3, 3), activation='relu', padding='same', strides=(1,1))(x)
+        x = layers.MaxPooling2D((2, 1))(x)
+        
         # Flatten before passing to Dense layers
         x = layers.Flatten()(x)
 
         # Fully connected layer
+        x = layers.Dense(512, activation='relu')(x)
         x = layers.Dense(256, activation='relu')(x)
-        x = layers.Dense(128, activation='relu')(x)
-        x = layers.Dense(32, activation='linear')(x)
+        x = layers.Dense(64, activation='linear')(x)
 
         # Output layer
         outputs = layers.Dense(self._output_dim, activation='linear')(x)
@@ -127,7 +165,7 @@ class TrainModel_CNN:
         model.compile(loss=MeanSquaredError(), optimizer=Adam(learning_rate=self._learning_rate))
 
         return model
-
+        
     def predict_one(self, state):
         """
         Predict the action values from a single state
