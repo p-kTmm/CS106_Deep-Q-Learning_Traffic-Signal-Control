@@ -1,6 +1,5 @@
 import os
 from tensorflow.keras.layers import Conv2D
-https://github.com/p-kTmm/CS106_DoAnCK_DEV/edit/main/model.py
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # suppress TensorFlow warnings
 import tensorflow as tf
 import numpy as np
