@@ -1,6 +1,6 @@
 import os
 from tensorflow.keras.layers import Conv2D
-
+https://github.com/p-kTmm/CS106_DoAnCK_DEV/edit/main/model.py
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # suppress TensorFlow warnings
 import tensorflow as tf
 import numpy as np
@@ -244,8 +244,8 @@ class TrainModel_DDQN:
             self.update_target_model()
 
     def save_model(self, path):
-        # self._model.save(os.path.join(path, 'trained_model.h5'))
-        self._target_model.save(os.path.join(path, 'trained_model.h5'))
+        self._model.save(os.path.join(path, 'trained_model.h5'))
+        # self._target_model.save(os.path.join(path, 'trained_model.h5'))
     
         # Optionally save the model architectures to PNG
         plot_model(self._model, to_file=os.path.join(path, 'model_structure_ddqn.png'), show_shapes=True, show_layer_names=True)
