@@ -192,7 +192,7 @@ class TrainModel_DDQN:
         self._batch_size = batch_size
         self._learning_rate = learning_rate
         self.train_counter = 0
-        self.update_freq = 10
+        self.update_freq = 200
         # Main model
         self._model = self._build_model(num_layers, width)
         # Target model
@@ -243,8 +243,8 @@ class TrainModel_DDQN:
             self.update_target_model()
 
     def save_model(self, path):
-        self._model.save(os.path.join(path, 'trained_model.h5'))
-        # self._target_model.save(os.path.join(path, 'trained_model.h5'))
+        # self._model.save(os.path.join(path, 'trained_model.h5'))
+        self._target_model.save(os.path.join(path, 'trained_model.h5'))
     
         # Optionally save the model architectures to PNG
         plot_model(self._model, to_file=os.path.join(path, 'model_structure_ddqn.png'), show_shapes=True, show_layer_names=True)
