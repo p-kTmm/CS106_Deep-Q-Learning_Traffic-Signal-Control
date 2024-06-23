@@ -9,7 +9,7 @@ I have uploaded this here to help anyone searching for a good starting point for
 
 Our team has developed an additional DQN model using CNN and a DDQN model, which you can choose for training. Both models perform better compared to the DQN_FullyConnected model from the original paper. Furthermore, we have utilized Priority Memory instead of the original paper's Normal Memory for our model training. This change enhances the efficiency and performance of our models by prioritizing more significant experiences during the learning process.
 
-Additionally, our team has created a folder ```multiple_intersection``` containing the source code for model development with multiple intersections. We also designed two models: DQN and DDQN with two types of waiting times (awt & wt) as we mentioned in the presentation (read README.md in ```multiple_intersection``` folder for more info).
+Additionally, our team has created a folder ```multiple_intersection``` containing the source code for model development with multiple intersections. We also designed DQN with two types of waiting times (awt & wt) as we mentioned in the presentation (read README.md in ```multiple_intersection``` folder for more info).
 
 
 ## Getting Started
